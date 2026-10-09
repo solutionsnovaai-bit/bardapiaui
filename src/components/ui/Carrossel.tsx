@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import type { CSSProperties, FocusEvent, MouseEvent, PointerEvent as RPointerEvent, RefObject } from 'react'
+import type { CSSProperties, FocusEvent, MouseEvent, PointerEvent as RPointerEvent } from 'react'
 import { m, useAnimationFrame, useMotionValue } from 'motion/react'
 import { ArrowLeft, ArrowRight, Pause, Play } from 'lucide-react'
 import type { ItemFoto } from '../../content/cardapio'
@@ -10,25 +10,16 @@ import { useMedia } from '../../hooks/useMedia'
 /** Mantém o deslocamento entre -largura e 0 (o trilho tem cópias lado a lado, então dá a volta sem emenda). */
 const envolve = (v: number, w: number) => (w > 0 ? (((v % w) - w) % w) : v)
 
-function Cartao({ item, duplicado, perto, raiz, sizes, index }: { item: ItemFoto; duplicado: boolean; perto: boolean; raiz: RefObject<HTMLDivElement | null>; sizes: string; index: number }) {
-  const ref = useRef<HTMLElement>(null)
-  const [dentro, setDentro] = useState(false)
-  useEffect(() => {
-    const el = ref.current, root = raiz.current
-    if (!el || !root || dentro || !perto) return
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setDentro(true); io.disconnect() } }, { root, rootMargin: '0px 110% 0px 110%' })
-    io.observe(el)
-    return () => io.disconnect()
-  }, [raiz, dentro, perto])
+function Cartao({ item, duplicado, perto, sizes, index }: { item: ItemFoto; duplicado: boolean; perto: boolean; sizes: string; index: number }) {
   const r = item.w && item.h ? item.w / item.h : 3 / 4
   const giro = ((index * 7) % 5 - 2) * .6
-  return <figure ref={ref} className={`car-card ${item.foto ? '' : 'is-sem-foto'}`} style={{ '--ar': r, '--giro': `${giro}deg` } as CSSProperties} aria-hidden={duplicado || undefined}>
+  return <figure className={`car-card ${item.foto ? '' : 'is-sem-foto'}`} style={{ '--ar': r, '--giro': `${giro}deg` } as CSSProperties} aria-hidden={duplicado || undefined}>
     <span className="car-foto">
       {item.foto
         ? <picture>
           <source type="image/avif" srcSet={`${item.foto}.avif ${item.w}w`} sizes={sizes} />
           <img src={`${item.foto}.webp`} srcSet={`${item.foto}.webp ${item.w}w`} sizes={sizes} width={item.w} height={item.h}
-            alt={duplicado ? '' : item.alt} loading={perto && dentro ? 'eager' : 'lazy'} decoding="async" draggable={false} />
+            alt={duplicado ? '' : item.alt} loading={perto ? 'eager' : 'lazy'} decoding="async" draggable={false} />
         </picture>
         : <span className="car-vazio mao" aria-hidden="true">{item.nome}</span>}
     </span>
@@ -138,7 +129,7 @@ export default function Carrossel({ itens, rotulo, className = '', sizes, veloci
       onClickCapture={cliqueCaptura} onFocus={focou} onBlur={() => { s.current.foco = false }}>
       <m.div className="car-trilho" style={reduced ? undefined : { x }}>
         {Array.from({ length: copias }, (_, c) => <div key={c} ref={c === 0 ? primeiroSet : undefined} className="car-set">
-          {itens.map((it, i) => <Cartao key={it.nome} item={it} index={i} duplicado={c > 0} perto={perto} raiz={palco} sizes={sizes} />)}
+          {itens.map((it, i) => <Cartao key={it.nome} item={it} index={i} duplicado={c > 0} perto={perto} sizes={sizes} />)}
         </div>)}
       </m.div>
     </div>
