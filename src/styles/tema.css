@@ -1,0 +1,39 @@
+/*
+  Cores e tokens, tirados do próprio bar:
+  cal (a parede caiada e o papel do logotipo), breu (o preto do logotipo), âmbar (a cerveja da taça),
+  palha (o trigo), estrela (a plaquinha amarela de preço) e aço (a prateleira galvanizada).
+*/
+@theme {
+  --color-cal: #EDE8DF;
+  --color-cal-2: #E2DBCF;
+  --color-cal-3: #F6F3EE;
+  --color-breu: #17120E;
+  --color-breu-2: #2A221C;
+  --color-noite: #0B0A09;
+  --color-ambar: #E8820C;
+  --color-ambar-escuro: #B85F06;
+  --color-espuma: #F7E7C6;
+  --color-palha: #E8C98C;
+  --color-palha-escura: #8F6A2A;
+  --color-estrela: #FFE11A;
+  --color-aco: #8E979C;
+  --color-placa: #1F4C9A;
+  --color-tinta: #17120E;
+  --color-tinta-2: #57493D;
+  --color-linha: rgb(23 18 14 / 0.16);
+
+  --font-sans: 'Archivo', 'Archivo Reserva', ui-sans-serif, system-ui, sans-serif;
+  --font-mao: 'Permanent Marker', 'Comic Sans MS', cursive;
+
+  --ease-luxo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-cortina: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-mola: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+:root {
+  --margem: clamp(20px, 5vw, 72px);
+  --largura: 1400px;
+  --topo-h: 74px;
+  --secao-y: clamp(92px, 12vw, 180px);
+}
+@media (max-width: 767px) { :root { --topo-h: 64px; } }

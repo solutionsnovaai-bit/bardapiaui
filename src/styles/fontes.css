@@ -1,0 +1,25 @@
+/* Archivo (variável: peso 100–900 e largura 62–125%) e Permanent Marker, servidas pelo próprio site. */
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Permanent Marker';
+  src: url('/fonts/permanent-marker.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+/* Reserva com métricas parecidas, para o texto não pular quando a fonte chega. */
+@font-face {
+  font-family: 'Archivo Reserva';
+  src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
+  size-adjust: 101%;
+  ascent-override: 88%;
+  descent-override: 21%;
+  line-gap-override: 0%;
+}

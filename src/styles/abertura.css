@@ -1,0 +1,36 @@
+/* ---------- Abertura ---------- */
+.abertura { position: fixed; inset: 0; z-index: 100; pointer-events: none; contain: strict; }
+.abertura.is-bloqueando { pointer-events: auto; }
+.ab-cal, .ab-breu { position: absolute; inset: 0; }
+.ab-breu { background: var(--color-breu); }
+/* a luz abre em círculo a partir da taça */
+.ab-breu.is-abrindo {
+  --raio: -10vmax;
+  -webkit-mask: radial-gradient(circle at var(--cx, 50%) var(--cy, 45%), transparent var(--raio), #000 calc(var(--raio) + 18vmax));
+  mask: radial-gradient(circle at var(--cx, 50%) var(--cy, 45%), transparent var(--raio), #000 calc(var(--raio) + 18vmax));
+}
+html[data-abertura="rapida"] .ab-breu { opacity: 0; }
+
+.ab-palco {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: clamp(14px, 2.4vh, 24px);
+  padding-bottom: 2vh;
+}
+.ab-lugar { height: min(58vh, 82vw); aspect-ratio: 1; }
+.ab-legenda {
+  font-size: clamp(1rem, 2.2vh, 1.25rem); color: var(--color-palha); opacity: 0;
+  transform: rotate(-2deg);
+}
+html[data-abertura="rapida"] .ab-legenda { display: none; }
+
+.ab-voo-x, .ab-voo-y { position: fixed; left: 0; top: 0; will-change: transform; }
+.ab-voo-y { transform-origin: 0 0; }
+.ab-logo { position: relative; }
+.ab-linhas, .ab-logo-img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ab-linhas { overflow: visible; }
+.ab-linhas path { fill: none; stroke: var(--color-palha); stroke-linejoin: round; stroke-linecap: round; }
+.ab-logo-img { opacity: 0; object-fit: contain; }
+.ab-cerveja { position: absolute; clip-path: inset(100% 0% 0% 0%); }
+.ab-cerveja img { width: 100%; height: 100%; transform-origin: 50% 100%; }
+html[data-abertura="rapida"] .ab-linhas, html[data-abertura="rapida"] .ab-cerveja { display: none; }

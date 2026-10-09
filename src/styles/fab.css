@@ -1,0 +1,39 @@
+/* ---------- Balão do WhatsApp (sempre visível, com inércia de mola) ---------- */
+.fab {
+  position: fixed; z-index: 95;
+  right: max(16px, calc(env(safe-area-inset-right) + 12px));
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  display: flex; align-items: center; gap: 12px;
+  opacity: 0; transform: translate3d(0, 24px, 0) scale(.5);
+  transition: opacity .6s var(--ease-luxo), transform 1s cubic-bezier(.34, 1.56, .64, 1);
+  pointer-events: none;
+}
+.fab.is-visivel { opacity: 1; transform: none; }
+.fab-botao {
+  position: relative; display: grid; place-items: center;
+  width: 62px; height: 62px; border-radius: 50%;
+  background: var(--color-breu); color: var(--color-cal);
+  box-shadow: 0 14px 30px -12px rgb(30 22 18 / .6);
+  transition: background-color .5s var(--ease-luxo), color .5s var(--ease-luxo);
+  will-change: transform; pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+.fab-botao svg { width: 28px; height: 28px; }
+.fab-anel { position: absolute; inset: 4px; border-radius: 50%; border: 1px solid rgb(255 225 26 / .8); transition: border-color .5s; }
+.fab.sobre-escuro .fab-botao { background: var(--color-estrela); color: var(--color-breu); box-shadow: 0 14px 30px -12px rgb(0 0 0 / .7); }
+.fab.sobre-escuro .fab-anel { border-color: rgb(23 18 14 / .35); }
+@media (hover: hover) { .fab-botao:hover { background: var(--color-ambar); color: var(--color-breu); } }
+.fab-dica {
+  padding: 10px 16px; border-radius: 999px;
+  background: var(--color-cal-3); color: var(--color-breu);
+  font-size: .85rem; font-weight: 700; font-stretch: 88%; white-space: nowrap;
+  box-shadow: 0 10px 26px -14px rgb(30 22 18 / .5);
+  opacity: 0; transform: translate3d(10px, 0, 0); transition: opacity .5s var(--ease-luxo), transform .5s var(--ease-luxo);
+  pointer-events: none;
+}
+.fab-dica.is-visivel { opacity: 1; transform: none; }
+@media (max-width: 767px) { .fab-botao { width: 58px; height: 58px; } .fab-botao svg { width: 26px; height: 26px; } }
+/* Com o menu aberto (fundo escuro), o balão fica amarelo e a dica some. */
+html.menu-aberto .fab-botao { background: var(--color-estrela); color: var(--color-breu); }
+html.menu-aberto .fab-anel { border-color: rgb(23 18 14 / .35); }
+html.menu-aberto .fab-dica { opacity: 0; }

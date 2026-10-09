@@ -1,0 +1,171 @@
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: auto;
+  scroll-padding-top: calc(var(--topo-h) + 12px);
+  overflow-x: clip;
+  background: var(--color-cal);
+}
+html.travado, html.travado body { overflow: hidden; }
+body {
+  margin: 0;
+  min-height: 100svh;
+  background-color: var(--color-cal);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  font-stretch: 100%;
+  line-height: 1.6;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+img, svg, video { display: block; max-width: 100%; }
+picture { display: contents; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+h1, h2, h3, h4, p, ul, ol, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+html { scrollbar-width: thin; scrollbar-color: var(--color-breu) var(--color-cal); }
+::selection { background: var(--color-estrela); color: var(--color-breu); }
+:focus-visible { outline: 3px solid var(--color-ambar-escuro); outline-offset: 3px; border-radius: 3px; }
+.tema-escuro :focus-visible, .tema-noite :focus-visible { outline-color: var(--color-estrela); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.pular-link {
+  position: fixed; left: 16px; top: 12px; z-index: 200;
+  padding: 10px 16px; border-radius: 999px;
+  background: var(--color-breu); color: var(--color-cal);
+  transform: translateY(-160%); transition: transform .3s var(--ease-luxo);
+}
+.pular-link:focus-visible { transform: none; }
+
+/* ---------- Cal: a parede caiada (grão fino + manchas largas, desenhados pelo navegador) ---------- */
+.cal {
+  background-color: var(--color-cal);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .09 0 0 0 0 .07 0 0 0 0 .05 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .48 0 0 0 0 .40 0 0 0 .22 -.06'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+  background-size: 220px 220px, 900px 900px;
+}
+
+/* ---------- Layout ---------- */
+.conteiner { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; }
+.secao { position: relative; padding-block: var(--secao-y); }
+.tema-escuro { background-color: var(--color-breu); color: var(--color-cal); }
+.tema-noite { background-color: var(--color-noite); color: var(--color-cal); }
+
+/* ---------- Tipografia ---------- */
+/* Letreiro: o grotesco bem condensado das placas de boteco. */
+.letreiro {
+  font-weight: 860;
+  font-stretch: 62%;
+  font-size: clamp(3.1rem, min(8.4vw, 12.4vh), 9.4rem);
+  line-height: .84;
+  letter-spacing: -.012em;
+  text-transform: uppercase;
+}
+.titulo-caixa { container-type: inline-size; }
+.titulo {
+  font-weight: 860;
+  font-stretch: 62%;
+  /* a linha mais longa ocupa a coluna inteira (--titulo-em = largura dela em em) */
+  font-size: min(var(--titulo-max, 9rem), calc(100cqi / var(--titulo-em, 6)));
+  line-height: .84;
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.titulo-m {
+  font-weight: 800;
+  font-stretch: 70%;
+  font-size: clamp(1.9rem, 3.4vw, 3.2rem);
+  line-height: .95;
+  letter-spacing: -.005em;
+  text-transform: uppercase;
+}
+/* Escrito à mão, de pincel atômico, como as plaquinhas do bar. */
+.mao { font-family: var(--font-mao); font-weight: 400; letter-spacing: .005em; text-transform: none; }
+.lead { font-size: clamp(1.06rem, 1.3vw, 1.22rem); line-height: 1.55; color: var(--color-tinta-2); max-width: 44ch; text-wrap: pretty; }
+.tema-escuro .lead, .tema-noite .lead { color: rgb(237 232 223 / .74); }
+.num { font-variant-numeric: lining-nums tabular-nums; }
+
+/* Linhas mascaradas (títulos) */
+.linhas { display: block; }
+.linha-mascara { display: block; overflow: clip; padding-bottom: .06em; margin-bottom: -.06em; }
+.linha-mascara > span { display: block; transform-origin: 0% 100%; }
+
+/* ---------- Botões ---------- */
+.botao {
+  --b-fundo: var(--color-breu);
+  --b-texto: var(--color-cal);
+  --b-hover: var(--color-ambar);
+  --b-hover-texto: var(--color-breu);
+  --b-icone: var(--color-estrela);
+  position: relative; isolation: isolate;
+  display: inline-flex; align-items: center; gap: 14px;
+  min-height: 62px; padding: 8px 26px 8px 8px;
+  border-radius: 999px;
+  background: var(--b-fundo); color: var(--b-texto);
+  font-weight: 700; font-stretch: 88%; font-size: 1.04rem; letter-spacing: .005em; line-height: 1.1;
+  overflow: hidden;
+  transition: color .5s var(--ease-luxo);
+  -webkit-tap-highlight-color: transparent;
+}
+.botao::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: var(--b-hover); border-radius: inherit;
+  transform: translate3d(0, 101%, 0);
+  transition: transform .6s var(--ease-luxo);
+}
+.botao-icone {
+  display: grid; place-items: center; flex: none;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--b-icone); color: var(--color-breu);
+  transition: background-color .5s var(--ease-luxo), color .5s var(--ease-luxo), transform .6s var(--ease-mola);
+}
+.botao-icone svg { width: 21px; height: 21px; }
+.botao-rolo { position: relative; display: block; overflow: hidden; padding-block: 2px; white-space: nowrap; }
+.botao-rolo > span { display: block; transition: transform .6s var(--ease-luxo); }
+.botao-rolo > span + span { position: absolute; inset: 2px 0 auto 0; transform: translate3d(0, 110%, 0); }
+.botao-seta { width: 18px; height: 18px; flex: none; transition: transform .6s var(--ease-luxo); }
+@media (hover: hover) {
+  .botao:hover { color: var(--b-hover-texto); }
+  .botao:hover::before { transform: none; }
+  .botao:hover .botao-icone { background: var(--color-breu); color: var(--color-estrela); transform: rotate(-14deg) scale(1.04); }
+  .botao:hover .botao-rolo > span:first-child { transform: translate3d(0, -110%, 0); }
+  .botao:hover .botao-rolo > span + span { transform: none; }
+  .botao:hover .botao-seta { transform: translate3d(3px, -3px, 0); }
+}
+.botao-claro { --b-fundo: var(--color-cal); --b-texto: var(--color-breu); --b-hover: var(--color-estrela); --b-icone: var(--color-breu); }
+.botao-claro .botao-icone { color: var(--color-estrela); }
+.botao-estrela { --b-fundo: var(--color-estrela); --b-texto: var(--color-breu); --b-hover: var(--color-cal); --b-icone: var(--color-breu); }
+.botao-estrela .botao-icone { color: var(--color-estrela); }
+
+.link-linha {
+  position: relative; display: inline-flex; align-items: center; gap: 10px;
+  padding-block: 8px;
+  font-weight: 700; font-stretch: 88%;
+}
+.link-linha::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 3px; height: 2px;
+  background: currentColor; transform-origin: right; transition: transform .6s var(--ease-luxo);
+}
+.link-linha svg { width: 17px; height: 17px; transition: transform .6s var(--ease-luxo); }
+@media (hover: hover) {
+  .link-linha:hover::after { transform: scaleX(0); }
+  .link-linha:hover svg { transform: translate3d(0, 4px, 0); }
+}
+
+/* ---------- Movimento reduzido / pausado ---------- */
+.movimento-pausado .anima-continua, .movimento-pausado .anima-continua * { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
